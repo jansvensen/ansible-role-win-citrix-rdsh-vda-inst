@@ -15,16 +15,16 @@
 
 - name: Map SMB share
   win_shell: |
-    net use \\10.10.1.18 "deviceTRUST$" /user:share
+    net use \\10.10.1.22 '{{ smb_share_password }}' /user:'{{ smb_share_username }}'
 
-- name: Create Log Folder
-  win_file:
-    path: C:\Logs
+- name: create log folder
+  win_file: 
+    path: '{{ citrix_logfolder }}'
     state: directory
 
-- name: Create Install Folder
-  win_file:
-    path: C:\Install
+- name: Create install folder
+  win_file: 
+    path: '{{ citrix_installfolder }}'
     state: directory
 
 - name: Copy Citrix ISO
