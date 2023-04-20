@@ -1,17 +1,13 @@
 ---
 - name: Install VDA Pre-Reqs
   win_feature:
-    name:
-    - NET-Framework-45-Core
-    - Telnet-Client
-    - RDS-RD-Server
-    - Remote-Assistance
+    name: "{{ citrix_vda_prereqs }}"
     state: present
-  register: win_feature
+  register: vda_prereqs 
 
 - name: Reboot if features require
   win_reboot:
-  when: win_feature.reboot_required
+  when: vda_prereqs.reboot_required
 
 - name: Map SMB share
   win_shell: |
