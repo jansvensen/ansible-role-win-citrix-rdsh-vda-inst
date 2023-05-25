@@ -38,7 +38,7 @@
 - name: Install VDA Components
   win_package:
     path: "{{ disk_image_out.mount_paths[0] }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
-    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_DDC }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /noreboot /noresume /logpath 'C:\Logs' /masterimage
+    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /noreboot /noresume /logpath 'C:\Logs' /masterimage
     state: present
     expected_return_code: [0, 3, 3010]
     creates_service: BrokerAgent
