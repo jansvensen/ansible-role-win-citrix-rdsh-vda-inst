@@ -15,7 +15,7 @@
 
 - name: create log folder
   win_file: 
-    path: '{{ citrix_logfolder }}'
+    path: '{{ directory_logging }}'
     state: directory
 
 - name: Create install folder
