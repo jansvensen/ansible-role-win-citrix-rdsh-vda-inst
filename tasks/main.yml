@@ -43,7 +43,6 @@
     expected_return_code: [0, 3, 8]
   register: installvda
   tags: vda
-  become: true
 
 - name: Reboot server if requred
   ansible.windows.win_reboot:
@@ -57,7 +56,6 @@
     expected_return_code: [0, 3, 8]
   register: installvda
   tags: vda
-  become: true
   when: installvda.rc == 3
 
 - name: Reboot after VDA
