@@ -37,7 +37,7 @@
 
 - name: Install VDA part 1
   ansible.windows.win_package:
-    path: "{{ citrix_installfolder }}{{ citrix_version }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
+    path: "{{ citrix_installfolder }}{{ citrix_version_name }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
     state: present
     arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ directory_logging }}' /masterimage
     expected_return_code: [0, 3, 8]
@@ -50,7 +50,7 @@
 
 - name: Install VDA part 2
   ansible.windows.win_package:
-    path: "{{ citrix_installfolder }}{{ citrix_version }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
+    path: "{{ citrix_installfolder }}{{ citrix_version_name }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
     state: present
     arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ directory_logging }}' /masterimage
     expected_return_code: [0, 3, 8]
