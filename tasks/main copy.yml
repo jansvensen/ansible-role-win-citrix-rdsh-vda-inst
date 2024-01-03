@@ -1,0 +1,63 @@
+---
+- name: Install VDA Pre-Reqs
+  win_feature:
+    name: "{{ citrix_rdsh_vda_prereqs }}"
+    state: present
+  register: vda_prereqs 
+
+- name: Reboot if features require
+  win_reboot:
+  when: vda_prereqs.reboot_required
+
+- name: create log folder
+  win_file: 
+    path: '{{ directory_logging }}'
+    state: directory
+
+- name: Create install folder
+  win_file: 
+    path: '{{ citrix_installfolder }}'
+    state: directory
+
+- name: Map SMB share
+  win_shell: |
+    net use \\10.10.1.22 '{{ smb_share_password }}' /user:'{{ smb_share_username }}'
+
+- name: Copy Citrix zip to the local disk
+  win_copy:
+    src: '{{ citrix_ddc_srczipfile }}'
+    remote_src: true
+    dest: '{{ citrix_ddc_destzipfile }}' 
+    force: no
+
+- name: Unzip ZIP
+  community.windows.win_unzip:
+    src: '{{ citrix_ddc_destzipfile }}'
+    dest: '{{ citrix_installfolder }}'
+
+- name: Install VDA part 1
+  ansible.windows.win_package:
+    path: "{{ citrix_installfolder }}{{ citrix_version_name }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
+    state: present
+    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ directory_logging }}' /masterimage
+    expected_return_code: [0, 3, 8]
+  register: installvda
+  tags: vda
+
+- name: Reboot server if requred
+  ansible.windows.win_reboot:
+  when: (installvda.rc == 0) or (installvda.rc == 3) or (installvda.rc == 8)
+
+- name: Install VDA part 2
+  ansible.windows.win_package:
+    path: "{{ citrix_installfolder }}{{ citrix_version_name }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
+    state: present
+    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ directory_logging }}' /masterimage
+    expected_return_code: [0, 3, 8]
+  register: installvda
+  tags: vda
+  when: installvda.rc == 3
+
+- name: Reboot after VDA
+  win_reboot:
+  when: installvda.changed
