@@ -1,4 +1,14 @@
 ---
+- name: Install VDA Pre-Reqs
+  win_feature:
+    name: "{{ citrix_rdsh_vda_prereqs }}"
+    state: present
+  register: vda_prereqs 
+
+- name: Reboot after VDA Pre-Req
+  win_reboot:
+  when: vda_prereqs.changed
+
 - name: Install Microsoft Visual C++ Redistributable Latest - X86"
   win_package:
     path: https://aka.ms/vs/17/release/vc_redist.x86.exe
