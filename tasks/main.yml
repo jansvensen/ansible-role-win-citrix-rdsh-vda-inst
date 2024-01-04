@@ -5,23 +5,23 @@
     state: present
   register: vda_prereqs 
 
-- name: Install Microsoft Visual C++ Redistributable Latest - X86"
-  win_package:
-    path: https://aka.ms/vs/17/release/vc_redist.x86.exe
-    arguments: /q /norestart
-  register: vda_prereqs
+#- name: Install Microsoft Visual C++ Redistributable Latest - X86"
+#  win_package:
+#    path: https://aka.ms/vs/17/release/vc_redist.x86.exe
+#    arguments: /q /norestart
+#  register: vda_prereqs
 
-- name: Install Microsoft Visual C++ Redistributable Latest - X64"
-  win_package:
-    path: https://aka.ms/vs/17/release/vc_redist.x64.exe
-    arguments: /q /norestart
-  register: vda_prereqs
+#- name: Install Microsoft Visual C++ Redistributable Latest - X64"
+#  win_package:
+#    path: https://aka.ms/vs/17/release/vc_redist.x64.exe
+#    arguments: /q /norestart
+#  register: vda_prereqs
 
-- name: Install Microsoft .NET Framework 4.8 - Offline installer
-  win_package:
-    path: https://go.microsoft.com/fwlink/?linkid=2088631
-    arguments: /q /norestart
-  register: vda_prereqs
+#- name: Install Microsoft .NET Framework 4.8 - Offline installer
+#  win_package:
+#    path: https://go.microsoft.com/fwlink/?linkid=2088631
+#    arguments: /q /norestart
+#  register: vda_prereqs
 
 - name: Reboot after VDA Pre-Reqs
   win_reboot:
