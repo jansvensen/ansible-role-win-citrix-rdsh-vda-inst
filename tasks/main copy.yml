@@ -11,7 +11,7 @@
 
 - name: create log folder
   win_file: 
-    path: '{{ directory_logging }}'
+    path: '{{ win.directory.logging }}'
     state: directory
 
 - name: Create install folder
@@ -39,7 +39,7 @@
   ansible.windows.win_package:
     path: "{{ citrix_installfolder }}{{ citrix_version_name }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
     state: present
-    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ directory_logging }}' /masterimage
+    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ win.directory.logging }}' /masterimage
     expected_return_code: [0, 3, 8]
   register: installvda
   tags: vda
@@ -52,7 +52,7 @@
   ansible.windows.win_package:
     path: "{{ citrix_installfolder }}{{ citrix_version_name }}\\x64\\XenDesktop Setup\\XenDesktopVdaSetup.exe"
     state: present
-    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ directory_logging }}' /masterimage
+    arguments: /quiet /optimize /components vda /controllers '{{ citrix_site_ddc }}' /enable_remote_assistance /enable_hdx_ports /enable_real_time_transport /virtualmachine /logpath '{{ win.directory.logging }}' /masterimage
     expected_return_code: [0, 3, 8]
   register: installvda
   tags: vda
