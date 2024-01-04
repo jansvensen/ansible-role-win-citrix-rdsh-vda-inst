@@ -1,7 +1,7 @@
 ---
 - name: Install VDA Pre-Reqs
   win_feature:
-    name: "{{ citrix_rdsh_vda_prereqs }}"
+    name: "{{ citrixrdsh.vda.installation.prereqs }}"
     state: present
   register: vda_prereqs 
 
