@@ -39,14 +39,14 @@
   ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
     name: DefaultUserName
-    data: '{{ ansible.user }}'
+    data: '{{ ansible_user }}'
     state: present
 
 - name: Prepare machine for auto-logon to support VDA installation - 3
   ansible.windows.win_regedit:
     path: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon
     name: DefaultPassword
-    data: '{{ ansible.password }}'
+    data: '{{ ansible_password }}'
     state: present
 
 - name: Create Install Folder
@@ -79,8 +79,8 @@
   become_method: runas
   become_flags: logon_type=new_credentials logon_flags=netcredentials_only
   vars:
-    ansible_become_user: '{{ ansible.user }}'
-    ansible_become_pass: '{{ ansible.password }}'
+    ansible_become_user: '{{ ansible_user }}'
+    ansible_become_pass: '{{ ansible_password }}'
 
 - name: Pause for 10 minutes
   ansible.builtin.pause:
