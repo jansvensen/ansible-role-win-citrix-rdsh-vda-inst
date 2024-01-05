@@ -1,9 +1,9 @@
 ---
-- name: Install VDA Pre-Reqs
-  win_feature:
-    name: "{{ citrix.rdsh.vda.installation.prereqs }}"
-    state: present
-  register: vda_prereqs 
+#- name: Install VDA Pre-Reqs
+#  win_feature:
+#    name: "{{ citrix.rdsh.vda.installation.prereqs }}"
+#    state: present
+#  register: vda_prereqs 
 
 #- name: Install Microsoft Visual C++ Redistributable Latest - X86"
 #  win_package:
@@ -23,10 +23,10 @@
 #    arguments: /q /norestart
 #  register: vda_prereqs
 
-- name: Reboot after VDA Pre-Reqs
-  win_reboot:
-    reboot_timeout: 3600
-  when: vda_prereqs.changed
+#- name: Reboot after VDA Pre-Reqs
+#  win_reboot:
+#    reboot_timeout: 3600
+#  when: vda_prereqs.changed
 
 - name: Prepare machine for auto-logon to support VDA installation - 1
   ansible.windows.win_regedit:
