@@ -31,42 +31,42 @@
     data: '{{ ansible_password }}'
     state: present
 
-#- name: Create Install Folder
-#  win_file:
-#    path: '{{ directory_install }}'
-#    state: directory
+- name: Create Install Folder
+  win_file:
+    path: '{{ directory_install }}'
+    state: directory
 
-#- name: Create Citrix Install Folder
-#  win_file:
-#    path: '{{ directory_install }}\CitrixVDA'
-#    state: directory
+- name: Create Citrix Install Folder
+  win_file:
+    path: '{{ directory_install }}\CitrixVDA'
+    state: directory
 
-#- name: Download Citrix VDA ZIP file
-#  win_get_url:
-#    url: '{{citrix.rdsh.vda.installation.path}}/{{citrix.version.number}}/{{citrix.rdsh.vda.installation.zip}}'
-#    dest: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
+- name: Download Citrix VDA ZIP file
+  win_get_url:
+    url: '{{citrix.rdsh.vda.installation.path}}/{{citrix.version.number}}/{{citrix.rdsh.vda.installation.zip}}'
+    dest: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
 
-#- name: Unzip Citrix VDA ZIP file
-#  community.windows.win_unzip:
-#    src: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
-#    dest: '{{ directory_install }}\CitrixVDA'
+- name: Unzip Citrix VDA ZIP file
+  community.windows.win_unzip:
+    src: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
+    dest: '{{ directory_install }}\CitrixVDA'
 
-#- name: Install Citrix VDA Components
-#  win_package:
-#    path: '{{ directory_install }}\CitrixVDA\VDAServerSetup_{{ citrix.version.number }}\{{ citrix.rdsh.vda.installation.exepath }}'
-#    arguments: '{{ citrix.rdsh.vda.installation.params_full }}'
-#    state: present
-#    expected_return_code: [0, 3, 3010]
-#  become: true
-#  become_method: runas
-#  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
-#  vars:
-#    ansible_become_user: '{{ ansible_user }}'
-#    ansible_become_pass: '{{ ansible_password }}'
+- name: Install Citrix VDA Components
+  win_package:
+    path: '{{ directory_install }}\CitrixVDA\VDAServerSetup_{{ citrix.version.number }}\{{ citrix.rdsh.vda.installation.exepath }}'
+    arguments: '{{ citrix.rdsh.vda.installation.params_full }}'
+    state: present
+    expected_return_code: [0, 3, 3010]
+  become: true
+  become_method: runas
+  become_flags: logon_type=new_credentials logon_flags=netcredentials_only
+  vars:
+    ansible_become_user: '{{ ansible_user }}'
+    ansible_become_pass: '{{ ansible_password }}'
 
-#- name: Pause for 10 minutes
-#  ansible.builtin.pause:
-#    minutes: 10
+- name: Pause for 10 minutes
+  ansible.builtin.pause:
+    minutes: 10
 
 - name: Remove auto-logon reg keys - 1
   ansible.windows.win_regedit:
@@ -86,5 +86,5 @@
     name: DefaultPassword
     state: absent
 
-#- name: Reboot
-#  ansible.windows.win_reboot:
+- name: Reboot
+  ansible.windows.win_reboot:
