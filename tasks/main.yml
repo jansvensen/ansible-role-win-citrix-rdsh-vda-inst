@@ -71,7 +71,7 @@
 
 - name: Install VDA Components
   win_package:
-    path: '{{ directory_install }}\CitrixVDA\{{ citrix.version.name }}\{{ citrix.rdsh.vda.installation.exepath }}'
+    path: '{{ directory_install }}\CitrixVDA\VDAServerSetup_{{ citrix.version.number }}\{{ citrix.rdsh.vda.installation.exepath }}'
     arguments: '{{ citrix.rdsh.vda.installation.params_full }}'
     state: present
     expected_return_code: [0, 3, 3010]
