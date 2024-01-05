@@ -30,7 +30,7 @@
     name: DefaultPassword
     data: '{{ ansible_password }}'
     state: present
-
+ 
 - name: Create Install Folder
   win_file:
     path: '{{ directory_install }}'
