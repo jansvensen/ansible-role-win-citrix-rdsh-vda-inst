@@ -59,17 +59,17 @@
     path: '{{ directory_install }}\CitrixVDA'
     state: directory
 
-- name: Download Citrix ZIPfile
+- name: Download Citrix VDA ZIP file
   win_get_url:
     url: '{{citrix.rdsh.vda.installation.path}}/{{citrix.version.number}}/{{citrix.rdsh.vda.installation.zip}}'
     dest: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
 
-- name: Unzip ZIP
+- name: Unzip Citrix VDA ZIP file
   community.windows.win_unzip:
     src: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
     dest: '{{ directory_install }}\CitrixVDA'
 
-- name: Install VDA Components
+- name: Install Citrix VDA Components
   win_package:
     path: '{{ directory_install }}\CitrixVDA\VDAServerSetup_{{ citrix.version.number }}\{{ citrix.rdsh.vda.installation.exepath }}'
     arguments: '{{ citrix.rdsh.vda.installation.params_full }}'
@@ -82,15 +82,53 @@
     ansible_become_user: '{{ ansible_user }}'
     ansible_become_pass: '{{ ansible_password }}'
 
-- name: Pause for 10 minutes
+- name: Wait for Windows Installer process to stop
+  community.windows.win_wait_for_process:
+    process_name_exact: 'XenDesktopVDASetup.exe'
+    state: absent
+    timeout: 900
+
+- name: Reboot
+  ansible.windows.win_reboot:
+
+- name: Pause for 1 minute
   ansible.builtin.pause:
-    minutes: 10
+    minutes: 1
 
 - name: Wait for Windows Installer process to stop
   community.windows.win_wait_for_process:
-    process_name_exact: 'msiexec'
+    process_name_exact: 'XenDesktopVDASetup.exe'
     state: absent
     timeout: 900
+
+- name: Reboot
+  ansible.windows.win_reboot:
+
+- name: Pause for 1 minute
+  ansible.builtin.pause:
+    minutes: 1
+
+- name: Wait for Windows Installer process to stop
+  community.windows.win_wait_for_process:
+    process_name_exact: 'XenDesktopVDASetup.exe'
+    state: absent
+    timeout: 900
+
+- name: Reboot
+  ansible.windows.win_reboot:
+
+- name: Pause for 1 minute
+  ansible.builtin.pause:
+    minutes: 1
+
+- name: Wait for Windows Installer process to stop
+  community.windows.win_wait_for_process:
+    process_name_exact: 'XenDesktopVDASetup.exe'
+    state: absent
+    timeout: 900
+
+- name: Reboot
+  ansible.windows.win_reboot:
 
 - name: Remove auto-logon reg keys - 1
   ansible.windows.win_regedit:
