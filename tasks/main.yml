@@ -64,9 +64,9 @@
     ansible_become_user: '{{ ansible_user }}'
     ansible_become_pass: '{{ ansible_password }}'
 
-- name: Pause for 10 minutes
+- name: Pause for 5 minutes
   ansible.builtin.pause:
-    minutes: 10
+    minutes: 5
 
 - name: Remove auto-logon reg keys - 1
   ansible.windows.win_regedit:
