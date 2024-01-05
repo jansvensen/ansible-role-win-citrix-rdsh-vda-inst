@@ -104,5 +104,5 @@
     name: DefaultPassword
     state: absent
 
-- name: Reboot
-  ansible.windows.win_reboot:
+#- name: Reboot
+#  ansible.windows.win_reboot:
