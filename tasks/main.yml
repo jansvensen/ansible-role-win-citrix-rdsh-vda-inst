@@ -88,7 +88,3 @@
 
 - name: Reboot
   ansible.windows.win_reboot:
-
-
-  # ToDo
-  # - Firewall
