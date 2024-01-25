@@ -41,19 +41,14 @@
     path: '{{ directory_install }}\CitrixVDA'
     state: directory
 
-- name: Download Citrix VDA ZIP file
+- name: Download Citrix VDA EXE file
   win_get_url:
-    url: '{{citrix.rdsh.vda.installation.path}}/{{citrix.version.number}}/{{citrix.rdsh.vda.installation.zip}}'
-    dest: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
-
-- name: Unzip Citrix VDA ZIP file
-  community.windows.win_unzip:
-    src: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.zip}}'
-    dest: '{{ directory_install }}\CitrixVDA'
+    url: '{{citrix.rdsh.vda.installation.path}}/{{citrix.version.number}}/{{citrix.rdsh.vda.installation.exe}}'
+    dest: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.exe}}'
 
 - name: Install Citrix VDA Components
   win_package:
-    path: '{{ directory_install }}\CitrixVDA\VDAServerSetup_{{ citrix.version.number }}\{{ citrix.rdsh.vda.installation.exepath }}'
+    path: '{{ directory_install }}\CitrixVDA\{{citrix.rdsh.vda.installation.exe}}'
     arguments: '{{ citrix.rdsh.vda.installation.params_full }}'
     state: present
     expected_return_code: [0, 3, 3010]
